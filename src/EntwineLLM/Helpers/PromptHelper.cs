@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 
 namespace EntwineLlm.Helpers
 {
@@ -34,37 +35,23 @@ namespace EntwineLlm.Helpers
 
         private static string EscapeJsonString(string input)
         {
-            var stringBuilder = new StringBuilder();
+            var escapeSequences = new Dictionary<char, string>
+            {
+                {'\"', "\\\""},
+                {'\\', "\\\\"},
+                {'\b', "\\b"},
+                {'\f', "\\f"},
+                {'\n', "\\n"},
+                {'\r', "\\r"},
+                {'\t', "\\t"}
+            };
 
+            var stringBuilder = new StringBuilder();
             foreach (char c in input)
             {
-                if (c == '"')
+                if (escapeSequences.TryGetValue(c, out var escape))
                 {
-                    stringBuilder.Append("\\\"");
-                }
-                else if (c == '\\')
-                {
-                    stringBuilder.Append("\\\\");
-                }
-                else if (c == '\b')
-                {
-                    stringBuilder.Append("\\b");
-                }
-                else if (c == '\f')
-                {
-                    stringBuilder.Append("\\f");
-                }
-                else if (c == '\n')
-                {
-                    stringBuilder.Append("\\n");
-                }
-                else if (c == '\r')
-                {
-                    stringBuilder.Append("\\r");
-                }
-                else if (c == '\t')
-                {
-                    stringBuilder.Append("\\t");
+                    stringBuilder.Append(escape);
                 }
                 else if (char.IsControl(c))
                 {
