@@ -20,8 +20,7 @@ namespace EntwineLlm
 
         public void DisplaySuggestion(string suggestion, string activeDocumentPath)
         {
-            SuggestionBox.Document.Blocks.Clear();
-            SuggestionBox.Document.Blocks.Add(new Paragraph(new Run(suggestion)));
+            SuggestionBox.Text = suggestion;
             _activeDocumentPath = activeDocumentPath;
         }
 
@@ -46,7 +45,7 @@ namespace EntwineLlm
 
         private void btnApply_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            string suggestionText = new TextRange(SuggestionBox.Document.ContentStart, SuggestionBox.Document.ContentEnd).Text;
+            string suggestionText = SuggestionBox.Text;
             ReplaceSelectedTextInIDE(suggestionText);
 
             btnClose_Click(sender, e);

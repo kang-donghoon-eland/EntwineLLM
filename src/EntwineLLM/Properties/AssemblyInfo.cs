@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("EntwineLlm")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("LLM coding assistant extension for Visual Studio")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Emiliano Musso")]
 [assembly: AssemblyProduct("EntwineLlm")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("Emiliano Musso")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

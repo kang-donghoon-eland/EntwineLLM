@@ -64,7 +64,8 @@ namespace EntwineLlm.Properties {
         ///   Cerca una stringa localizzata simile a CONTEXT: You are a highly skilled and experienced C# developer with in-depth expertise in the Microsoft .NET ecosystem, including the full framework, .NET Core, and .NET. You are also proficient in related technologies, such as LINQ, Entity Framework, ASP.NET Core, and other commonly used tools and libraries in the C# development landscape. Your goal is to deliver optimal and professional-grade code solutions.
         ///
         ///RULES:
-        ///1. Any user request not directly related to C# coding or its related technologies must  [stringa troncata]&quot;;.
+        ///1. No explanation, comments, or additional text should be provided.
+        ///2. For requests co [stringa troncata]&quot;;.
         /// </summary>
         internal static string DefaultPrompt {
             get {
@@ -79,6 +80,28 @@ namespace EntwineLlm.Properties {
             get {
                 object obj = ResourceManager.GetObject("entwine_logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a {
+        ///  &quot;model&quot;:&quot;{MODEL}&quot;,
+        ///  &quot;stream&quot;: false,
+        ///  &quot;messages&quot;: [
+        ///    {
+        ///      &quot;role&quot;: &quot;assistant&quot;,
+        ///      &quot;content&quot;: &quot;{PROMPT}&quot;
+        ///    },
+        ///    {
+        ///      &quot;role&quot;: &quot;user&quot;,
+        ///      &quot;content&quot;: &quot;[CODE]: {CODE}&quot;
+        ///    }
+        ///  ]
+        ///}.
+        /// </summary>
+        internal static string LlmBaseRequest {
+            get {
+                return ResourceManager.GetString("LlmBaseRequest", resourceCulture);
             }
         }
     }

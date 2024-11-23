@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using EntwineLlm.Helpers;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 using Task = System.Threading.Tasks.Task;
 
 namespace EntwineLlm
@@ -46,29 +45,14 @@ namespace EntwineLlm
 
         private async Task PerformRefactoringSuggestionAsync()
         {
-            var window = CreateProgressWindow();
-            window.Show();
+            var progressBarHelper = new ProgressBarHelper(ServiceProvider.GlobalProvider);
+            progressBarHelper.StartIndeterminateDialog();
 
             var methodCode = GetCurrentMethodCode();
             var refactoringHelper = new RefactoringHelper(package);
             await refactoringHelper.RequestAndShowRefactoringSuggestionAsync(methodCode, _activeDocumentPath);
 
-            window.Close();
-        }
-
-        private Window CreateProgressWindow()
-        {
-            var progressWindow = new ProgressWindow();
-            return new Window
-            {
-                Title = "Waiting LLM response",
-                Background = Brushes.Black,
-                Content = progressWindow,
-                Width = 420,
-                Height = 120,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Owner = Application.Current.MainWindow
-            };
+            progressBarHelper.StopDialog();
         }
 
         private static string GetCurrentMethodCode()
