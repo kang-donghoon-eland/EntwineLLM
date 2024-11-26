@@ -61,19 +61,6 @@ namespace EntwineLlm.Properties {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a CONTEXT: You are a highly skilled and experienced C# developer with in-depth expertise in the Microsoft .NET ecosystem, including the full framework, .NET Core, and .NET. You are also proficient in related technologies, such as LINQ, Entity Framework, ASP.NET Core, and other commonly used tools and libraries in the C# development landscape. Your goal is to deliver optimal and professional-grade code solutions.
-        ///
-        ///RULES:
-        ///1. No explanation, comments, or additional text should be provided.
-        ///2. For requests co [stringa troncata]&quot;;.
-        /// </summary>
-        internal static string DefaultPrompt {
-            get {
-                return ResourceManager.GetString("DefaultPrompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap entwine_logo {
@@ -102,6 +89,33 @@ namespace EntwineLlm.Properties {
         internal static string LlmBaseRequest {
             get {
                 return ResourceManager.GetString("LlmBaseRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a CONTEXT: You are a highly skilled and experienced C# developer with in-depth expertise in the Microsoft .NET ecosystem, including the full framework, .NET Core, and .NET. You are also proficient in related technologies, such as LINQ, Entity Framework, ASP.NET Core, and other commonly used tools and libraries in the C# development landscape. Your goal is to deliver optimal and professional-grade code solutions.
+        ///
+        ///RULES:
+        ///1. No explanation, comments, or additional text should be provided.
+        ///2. For requests co [stringa troncata]&quot;;.
+        /// </summary>
+        internal static string PromptForRefactor {
+            get {
+                return ResourceManager.GetString("PromptForRefactor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a CONTEXT: You are a highly skilled and experienced C# developer specializing in crafting professional-grade automated tests. You have deep expertise in testing methodologies and frameworks, including MSTest, NUnit, and xUnit. Your goal is to produce high-quality, maintainable, and performant test suites that adhere to best practices for software quality assurance.
+        ///
+        ///RULES:
+        ///
+        ///- The tests must be clear, readable, and follow the Arrange-Act-Assert (AAA) pattern to ensure logical structure.
+        ///- Avoid comments i [stringa troncata]&quot;;.
+        /// </summary>
+        internal static string PromptForTests {
+            get {
+                return ResourceManager.GetString("PromptForTests", resourceCulture);
             }
         }
     }

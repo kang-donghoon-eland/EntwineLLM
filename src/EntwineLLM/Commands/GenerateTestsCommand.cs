@@ -5,21 +5,21 @@ using System;
 
 namespace EntwineLlm
 {
-    internal sealed class RequestRefactorCommand : BaseCommand, IBaseCommand
+    internal sealed class GenerateTestsCommand : BaseCommand, IBaseCommand
     {
         public int Id
         {
             get
             {
-                return 250;
+                return 251;
             }
         }
 
-        public RequestRefactorCommand(AsyncPackage package) : base(package) { }
+        public GenerateTestsCommand(AsyncPackage package) : base(package) { }
 
         public void Execute(object sender, EventArgs e)
         {
-            _ = PerformRefactoringSuggestionAsync(Enums.RequestedCodeType.Refactor);
+            _ = PerformRefactoringSuggestionAsync(Enums.RequestedCodeType.Test);
         }
     }
 }
