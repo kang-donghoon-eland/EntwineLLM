@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
@@ -25,13 +26,14 @@ namespace EntwineLlm
         public async Task RequestCodeSuggestionsAsync(
             string methodCode,
             string activeDocumentPath,
-            RequestedCodeType codeType)
+            RequestedCodeType codeType,
+            string manualPrompt = "")
         {
-            var suggestion = await GetCodeSuggestionsAsync(methodCode, codeType);
+            var suggestion = await GetCodeSuggestionsAsync(methodCode, codeType, manualPrompt);
             await ShowRefactoringSuggestionAsync(suggestion, activeDocumentPath);
         }
 
-        private async Task<string> GetCodeSuggestionsAsync(string methodCode, RequestedCodeType codeType)
+        private async Task<string> GetCodeSuggestionsAsync(string methodCode, RequestedCodeType codeType, string manualPrompt)
         {
             using (var client = new HttpClient())
             {
@@ -41,6 +43,9 @@ namespace EntwineLlm
 
                 switch (codeType)
                 {
+                    case RequestedCodeType.Manual:
+                        prompt = PromptHelper.CreateForManualRequest(_options.LlmModel, methodCode, manualPrompt);
+                        break;
                     case RequestedCodeType.Refactor:
                         prompt = PromptHelper.CreateForRefactor(_options.LlmModel, methodCode);
                         break;
@@ -61,9 +66,16 @@ namespace EntwineLlm
                     var responseContent = await response.Content.ReadAsStringAsync();
                     var code = JObject.Parse(responseContent)["message"]["content"].ToString();
 
-                    return code
-                        .Replace("```csharp", "")
-                        .Replace("```", "");
+                    var pattern = @"```csharp(.*?)```";
+                    var matches = Regex.Matches(code, pattern, RegexOptions.Singleline);
+
+                    var extractedCode = new StringBuilder();
+                    foreach (Match match in matches)
+                    {
+                        extractedCode.AppendLine(match.Groups[1].Value.Trim());
+                    }
+
+                    return extractedCode.ToString();
                 }
                 catch (Exception ex)
                 {

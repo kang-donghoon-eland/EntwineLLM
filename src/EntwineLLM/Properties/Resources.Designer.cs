@@ -71,24 +71,15 @@ namespace EntwineLlm.Properties {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {
-        ///  &quot;model&quot;:&quot;{MODEL}&quot;,
-        ///  &quot;stream&quot;: false,
-        ///  &quot;messages&quot;: [
-        ///    {
-        ///      &quot;role&quot;: &quot;assistant&quot;,
-        ///      &quot;content&quot;: &quot;{PROMPT}&quot;
-        ///    },
-        ///    {
-        ///      &quot;role&quot;: &quot;user&quot;,
-        ///      &quot;content&quot;: &quot;[CODE]: {CODE}&quot;
-        ///    }
-        ///  ]
-        ///}.
+        ///   Cerca una stringa localizzata simile a CONTEXT: You are a highly skilled and experienced C# developer with in-depth expertise in the Microsoft .NET ecosystem, including the full framework, .NET Core, and .NET. You are also proficient in related technologies, such as LINQ, Entity Framework, ASP.NET Core, and other commonly used tools and libraries in the C# development landscape. Your goal is to deliver optimal and professional-grade code solutions.
+        ///
+        ///RULES:
+        ///- No explanation, comments, or additional text should be provided.
+        ///- For requests cont [stringa troncata]&quot;;.
         /// </summary>
-        internal static string LlmBaseRequest {
+        internal static string PromptForManual {
             get {
-                return ResourceManager.GetString("LlmBaseRequest", resourceCulture);
+                return ResourceManager.GetString("PromptForManual", resourceCulture);
             }
         }
         
@@ -106,12 +97,11 @@ namespace EntwineLlm.Properties {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a CONTEXT: You are a highly skilled and experienced C# developer specializing in crafting professional-grade automated tests. You have deep expertise in testing methodologies and frameworks, including MSTest, NUnit, and xUnit. Your goal is to produce high-quality, maintainable, and performant test suites that adhere to best practices for software quality assurance.
+        ///   Cerca una stringa localizzata simile a CONTEXT: You are a highly skilled and experienced C# developer specializing in crafting professional-grade automated tests. You have deep expertise in testing methodologies and frameworks, including MSTest, NUnit, and xUnit. Your goal is to produce high-quality, maintainable, and performant test suites that adhere to best practices for software quality assurance for code provided with [CODE] 
         ///
         ///RULES:
         ///
-        ///- The tests must be clear, readable, and follow the Arrange-Act-Assert (AAA) pattern to ensure logical structure.
-        ///- Avoid comments i [stringa troncata]&quot;;.
+        ///- The tests must be clear, readable, and follow the Arrange-Act-Assert (AAA) pattern to ensure logical  [stringa troncata]&quot;;.
         /// </summary>
         internal static string PromptForTests {
             get {
