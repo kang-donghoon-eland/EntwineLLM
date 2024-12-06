@@ -13,6 +13,7 @@ namespace EntwineLlm
     [Guid(PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideToolWindow(typeof(RefactorSuggestionWindow))]
+    [ProvideToolWindow(typeof(MarkdownViewerWindow))]
     [ProvideOptionPage(typeof(EntwineLlmOptions), "EntwineLlm", "Configuration", 0, 0, true)]
     public sealed class EntwineLlmPackage : AsyncPackage
     {
@@ -31,7 +32,9 @@ namespace EntwineLlm
             var commands = new List<IBaseCommand>()
             {
                 new RequestRefactorCommand(this),
-                new GenerateTestsCommand(this)
+                new GenerateTestsCommand(this),
+                new DocumentCodeCommand(this),
+                new CodeReviewCommand(this)
             };
 
             commandsMenu.AddCommands(commands);
