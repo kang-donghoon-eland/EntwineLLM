@@ -1,15 +1,9 @@
-﻿using EntwineLlm.Clients;
-using EntwineLlm.Enums;
+﻿using EntwineLlm.Enums;
 using EntwineLlm.Helpers;
 using EntwineLlm.Models;
 using Microsoft.VisualStudio.Shell;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Net.Http;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Task = System.Threading.Tasks.Task;
 
 namespace EntwineLlm
 {
@@ -26,15 +20,15 @@ namespace EntwineLlm
             _modelsOptions = package.GetDialogPage(typeof(ModelsOptions)) as ModelsOptions;
         }
 
-        public async Task RequestCodeSuggestionsAsync(
+        public async Task RequestSuggestionsAsync(
             string methodCode,
             string activeDocumentPath,
             CodeType codeType,
             string manualPrompt = "")
         {
-            var suggestion = await GetCodeSuggestionsAsync(methodCode, codeType, manualPrompt);
+            var suggestion = await GetSuggestionsAsync(methodCode, codeType, manualPrompt);
 
-            switch (suggestion.Type)
+            switch (codeType)
             {
                 case CodeType.Documentation:
                 case CodeType.Review:
@@ -47,7 +41,7 @@ namespace EntwineLlm
             }
         }
 
-        private async Task<CodeSuggestionResponse> GetCodeSuggestionsAsync(string methodCode, CodeType codeType, string manualPrompt)
+        private async Task<CodeSuggestionResponse> GetSuggestionsAsync(string methodCode, CodeType codeType, string manualPrompt)
         {
             var promptHelper = new PromptHelper(_generalOptions.Language);
 
@@ -61,8 +55,7 @@ namespace EntwineLlm
                 _ => throw new ArgumentException("Invalid requested code type"),
             };
 
-            using var llmClient = new LlmClient(_generalOptions.LlmUrl, _generalOptions.LlmRequestTimeOut);
-            return await llmClient.GetCodeSuggestionsAsync(codeType, prompt);
+            return await EntwineLlmPackage.LlmClient.GetCodeSuggestionsAsync(codeType, prompt);
         }
 
         private async Task ShowSuggestionWindowAsync(string suggestion, string activeDocumentPath)

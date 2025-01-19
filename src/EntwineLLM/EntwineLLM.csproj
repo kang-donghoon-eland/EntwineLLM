@@ -52,7 +52,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Clients\LlmClient.cs" />
+    <Compile Include="Clients\Interfacs\ILlmClient.cs" />
+    <Compile Include="Clients\OllamaClient.cs" />
     <Compile Include="CommandsMenu.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\CodeReviewCommand.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Commands\Interfaces\IBaseCommand.cs" />
     <Compile Include="Commands\RequestRefactorCommand.cs" />
     <Compile Include="Converters\LanguageConverter.cs" />
+    <Compile Include="Converters\LlmModelConverter.cs" />
     <Compile Include="EntwineLLMOptions.cs">
       <SubType>Component</SubType>
     </Compile>

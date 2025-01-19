@@ -1,7 +1,10 @@
-﻿using EntwineLlm.Enums;
+﻿using EntwineLlm.Clients.Interfacs;
+using EntwineLlm.Enums;
 using EntwineLlm.Models;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,16 +12,68 @@ using System.Threading.Tasks;
 
 namespace EntwineLlm.Clients
 {
-    internal class LlmClient : IDisposable
+    internal class OllamaClient : ILlmClient, IDisposable
     {
-        private readonly string _baseUrl;
-        private readonly TimeSpan _timeOut;
+        private string _baseUrl;
+        private TimeSpan _timeOut;
         private bool disposedValue;
 
-        public LlmClient(string baseUrl, TimeSpan timeOut)
+        public OllamaClient(GeneralOptions options)
+        {
+            _baseUrl = options.LlmUrl;
+            _timeOut = options.LlmRequestTimeOut;
+        }
+
+        public OllamaClient(string baseUrl, TimeSpan timeOut)
         {
             _baseUrl = baseUrl;
             _timeOut = timeOut;
+        }
+
+        public void SetBaseUrl(string baseUrl)
+        {
+            _baseUrl = baseUrl;
+        }
+
+        public string GetBaseUrl()
+        {
+            return _baseUrl;
+        }
+
+        public void SetTimeOut(TimeSpan timeOut)
+        {
+            _timeOut = timeOut;
+        }
+
+        public TimeSpan GetTimeOut()
+        {
+            return _timeOut;
+        }
+
+        public async Task<string[]> GetModelListAsync()
+        {
+            using var client = new HttpClient();
+            client.Timeout = _timeOut;
+
+            try
+            {
+                List<string> modelList = [];
+                var response = await client.GetAsync($"{_baseUrl}/api/tags");
+                response.EnsureSuccessStatusCode();
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var models = JObject.Parse(responseContent)["models"];
+                foreach (var model in models)
+                {
+                    modelList.Add(model["name"].ToString());
+                }
+
+                return [.. modelList];
+            }
+            catch
+            {
+                return Enumerable.Empty<string>().ToArray();
+            }
         }
 
         public async Task<CodeSuggestionResponse> GetCodeSuggestionsAsync(CodeType codeType, string prompt)
