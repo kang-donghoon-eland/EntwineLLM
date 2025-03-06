@@ -9,4 +9,10 @@
         Test = 20,
         Review = 30
     }
+
+    public enum ClientAgentType 
+    {
+        LmStudio, 
+        Ollama 
+    }
 }

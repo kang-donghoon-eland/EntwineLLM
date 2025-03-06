@@ -1,7 +1,9 @@
 ﻿using EntwineLlm.Clients;
 using EntwineLlm.Clients.Interfacs;
 using EntwineLlm.Commands.Interfaces;
+using EntwineLlm.Enums;
 using EntwineLlm.Models;
+
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
@@ -31,7 +33,15 @@ namespace EntwineLlm
             Instance = this;
 
             var generalOptions = this.GetDialogPage(typeof(GeneralOptions)) as GeneralOptions;
-            LlmClient = new OllamaClient(generalOptions);
+            if (generalOptions.ModelType == ClientAgentType.LmStudio)
+            {
+                LlmClient = new LmStudioClient(generalOptions);
+            }
+            else if (generalOptions.ModelType == ClientAgentType.Ollama)
+            {
+                LlmClient = new OllamaClient(generalOptions);
+            }
+
 
             var commandsMenu = new CommandsMenu();
             await commandsMenu.InitializeAsync(this);

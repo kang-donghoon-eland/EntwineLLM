@@ -1,6 +1,8 @@
 ﻿using EntwineLlm.Converters;
+using EntwineLlm.Enums;
 using Microsoft.VisualStudio.Shell;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace EntwineLlm.Models
@@ -14,7 +16,7 @@ namespace EntwineLlm.Models
         {
             get
             {
-                return EntwineLlmPackage.LlmClient?.GetBaseUrl() ?? "http://localhost:11434";
+                return EntwineLlmPackage.LlmClient?.GetBaseUrl() ?? "http://localhost:1234/v1";
             }
             set
             {
@@ -43,7 +45,14 @@ namespace EntwineLlm.Models
         [Description("Set the language in which the LLM must answer")]
         [TypeConverter(typeof(LanguageConverter))]
         public string Language { get; set; } = "English";
+
+        [Category("Configuration")]
+        [DisplayName("Select LLM agent model")]
+        [Description("모델을 사용할 서비스 제공자를 선택합니다.")]
+
+        public ClientAgentType ModelType { get; set; } = ClientAgentType.LmStudio;
     }
+
 
     public class ModelsOptions : DialogPage
     {
